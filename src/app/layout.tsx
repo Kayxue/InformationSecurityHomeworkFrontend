@@ -13,6 +13,11 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+export const metadata: Metadata = {
+	title: "Login page",
+	description: "Page to login",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -1,12 +1,8 @@
-"use client";
-import { ChangeEvent, useState } from "react";
+'use client'
+import Image from "next/image";
 import styles from "./page.module.css";
 import { Metadata } from "next";
-
-export const metadata: Metadata = {
-	title: "Login page",
-	description: "Page to login",
-};
+import { ChangeEvent, useState } from "react";
 
 export default function Home() {
 	const [username, setUsername] = useState("");
@@ -22,19 +18,27 @@ export default function Home() {
 		setPassword(e.target.value);
 	}
 
+	function login(){
+
+	}
+
 	return (
-		<div className={styles.page}>
+		<div>
 			<h1>Login Page</h1>
 			<input
 				placeholder="Username"
 				onChange={(e) => onUsernameChange(e)}
 				value={username}
 			></input>
+			<br />
 			<input
 				placeholder="Password"
 				onChange={(e) => onPasswordChange(e)}
 				value={password}
+				type="password"
 			></input>
+			<br></br>
+			<button onClick={() => login()}>Login</button>
 		</div>
 	);
 }
