@@ -9,7 +9,6 @@ export default function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordIncorrect, setPasswordIncorrect] = useState(false);
-	const [special, setSpecial] = useState(false);
 	const [isTimeout, setIsTimeout] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -25,11 +24,6 @@ export default function Login() {
 		setLoading(true);
 		setPasswordIncorrect(false);
 		setIsTimeout(false);
-		setSpecial(false);
-		if (/[^A-Za-z0-9]/.test(username) || /[^A-Za-z0-9]/.test(password)) {
-			setSpecial(true);
-			return;
-		}
 		const result = await axios
 			.post(
 				"http://localhost:3001/login",
@@ -72,7 +66,6 @@ export default function Login() {
 				<p style={{ color: "red" }}>使用者名稱或密碼輸入錯誤</p>
 			)}
 			{isTimeout && <p style={{ color: "red" }}>請五分鐘後再試</p>}
-			{special && <p style={{ color: "red" }}>禁止輸入特殊字元</p>}
 		</div>
 	);
 }
