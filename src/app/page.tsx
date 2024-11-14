@@ -1,14 +1,18 @@
-'use client'
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { Metadata } from "next";
 import { ChangeEvent, useState } from "react";
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordIncorrect, setPasswordIncorrect] = useState(false);
 	const [isTimeout, setIsTimeout] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 
 	function onUsernameChange(e: ChangeEvent<HTMLInputElement>) {
 		setUsername(e.target.value);
@@ -18,8 +22,26 @@ export default function Home() {
 		setPassword(e.target.value);
 	}
 
-	function login(){
-
+	async function login() {
+		setLoading(true);
+		const result = await axios
+			.post(
+				"http://localhost:3001/login",
+				{ username, password },
+				{ withCredentials: true }
+			)
+			.catch((e: AxiosError) => {
+				if (e.status !== 404) {
+					setPasswordIncorrect(true);
+					if ((e.response?.data as string).includes("locked")) {
+						setIsTimeout(true);
+					}
+				}
+				return -1;
+			});
+		setLoading(false);
+		if (result == -1) return;
+		router.replace("/profile");
 	}
 
 	return (
@@ -37,8 +59,13 @@ export default function Home() {
 				value={password}
 				type="password"
 			></input>
-			<br></br>
+			<br />
 			<button onClick={() => login()}>Login</button>
+			{loading && <p style={{ color: "red" }}>嘗試登入中......</p>}
+			{passwordIncorrect && (
+				<p style={{ color: "red" }}>使用者名稱或密碼輸入錯誤</p>
+			)}
+			{isTimeout && <p style={{ color: "red" }}>請五分鐘後再試</p>}
 		</div>
 	);
 }
