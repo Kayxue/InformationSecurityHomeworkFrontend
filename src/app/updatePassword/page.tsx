@@ -15,7 +15,7 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 	const [special, setSpecial] = useState(false);
 	const [notStrong, setNotStrong] = useState(false);
-    const [same, setSame] = useState(false);
+	const [same, setSame] = useState(false);
 
 	function backToLogin() {
 		router.replace("/");
@@ -24,7 +24,7 @@ export default function Login() {
 	async function updatePassword() {
 		setSpecial(false);
 		setNotStrong(false);
-        setSame(false)
+		setSame(false);
 		if (/[^A-Za-z0-9]/.test(password)) {
 			setSpecial(true);
 			return;
@@ -38,11 +38,11 @@ export default function Login() {
 				}
 			)
 			.catch((e) => {
-				if(e.response.data.includes("strong")){
-                    setNotStrong(true);
-                }else{
-                    setSame(true)
-                }
+				if (e.response.data.includes("strong")) {
+					setNotStrong(true);
+				} else {
+					setSame(true);
+				}
 			});
 		if (result) {
 			router.replace("/profile");
@@ -63,12 +63,12 @@ export default function Login() {
 				placeholder="New Password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
-                type="password"
-            ></input>
+				type="password"
+			></input>
 			<button onClick={() => updatePassword()}>Update password</button>
 			{special && <p style={{ color: "red" }}>密碼不能包含特殊字元</p>}
 			{notStrong && <p style={{ color: "red" }}>密碼不夠強</p>}
-            {same && <p style={{ color: "red" }}>密碼與前三次相同</p>}
+			{same && <p style={{ color: "red" }}>密碼與前三次相同</p>}
 		</>
 	);
 }

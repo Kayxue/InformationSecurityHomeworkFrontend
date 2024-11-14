@@ -10,7 +10,7 @@ export default function Login() {
 		fetcher,
 		{ shouldRetryOnError: false }
 	);
-	const router=useRouter()
+	const router = useRouter();
 
 	function backToLogin() {
 		router.replace("/");
@@ -34,7 +34,9 @@ export default function Login() {
 		<>
 			<h1>You have been logged in</h1>
 			<p>Welcome to the system! {data.username}!</p>
-			<button onClick={() => router.push("/updatePassword")}>Update Password</button>
+			<button onClick={() => router.push("/updatePassword")}>
+				Update Password
+			</button>
 			<button onClick={() => logout()}>Logout</button>
 		</>
 	);
